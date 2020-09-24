@@ -10,6 +10,11 @@
       "StackName": "amplify-shoppingsitebackend-dev-145442",
       "StackId": "arn:aws:cloudformation:ap-south-1:500496188876:stack/amplify-shoppingsitebackend-dev-145442/48fb16d0-fbec-11ea-aa28-02153b7bf71a",
       "AmplifyAppId": "d248p6rcedkur4"
+    },
+    "categories": {
+      "auth": {
+        "shoppingsitebackend9505ecd1": {}
+      }
     }
   }
 }

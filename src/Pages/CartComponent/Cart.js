@@ -1,56 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../../actions";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../actions";
 import Layout from "../../Layout/Layout";
 
 function Cart() {
-  const productsInCart = useSelector((state) => state.cart);
+  const productsInCart = useSelector(
+    (state) => state.cart.uniqueProductsInCart
+  );
 
-  const [productsToShow, setproductsToShow] = useState([]);
-  const [productOccurrenceById, setproductOccurrenceById] = useState({});
+  const productOccurrenceById = useSelector((state) => state.cart.productMap);
 
-  const [totalCartValue, settotalCartValue] = useState(0);
+  const totalCartValue = useSelector((state) => state.cart.cartValue);
+
   const dispatchToReduxStore = useDispatch();
 
-  useEffect(() => {
-    calculatePriceOfCart();
-    getUniqueCartProducts();
-  }, [productsInCart]);
-
-  const calculatePriceOfCart = () => {
-    let total = 0;
-
-    productsInCart.forEach((currentItem) => {
-      total = total + parseInt(currentItem.price);
-    });
-
-    settotalCartValue(total);
-  };
-
-  const getUniqueCartProducts = () => {
-    let trackOccurenceOfProduct = [];
-    let productMap = {};
-
-    productsInCart.forEach((currentItem) => {
-      console.log(currentItem.name);
-
-      if (productMap[currentItem.id] == undefined) {
-        trackOccurenceOfProduct.push(currentItem);
-        productMap[currentItem.id] = 1;
-      } else {
-        productMap[currentItem.id] = productMap[currentItem.id] + 1;
-      }
-    });
-
-    console.log(productMap);
-    console.log(trackOccurenceOfProduct);
-
-    setproductsToShow(trackOccurenceOfProduct);
-    setproductOccurrenceById(productMap);
-    //WHY IS THIS NOT GETTING SET .... ASK MENTOR
-    console.log(productsToShow);
-    console.log(productOccurrenceById);
-  };
+  useEffect(() => {}, [totalCartValue]);
 
   return (
     <div>
@@ -71,6 +35,14 @@ function Cart() {
                     <p className="card-text">{product.price}</p>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-12 paddingAllSides">
+                    <p className="card-text">{`Quantity : ${product.quantity}`}</p>
+                    <div
+                      className="btn btn-success marginAllSides"
+                      onClick={() => dispatchToReduxStore(addToCart(product))}
+                    >
+                      Add
+                    </div>
+
                     <div
                       className="btn btn-danger marginAllSides"
                       onClick={() =>

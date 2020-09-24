@@ -10,10 +10,11 @@ import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
+import logger from "redux-logger";
 
 Amplify.configure(config);
 
-const middleware = [reduxThunk];
+const middleware = [reduxThunk, logger];
 
 const store = createStore(
   allReducers,

@@ -17,3 +17,10 @@ export const getCartItems = () => {
     type: "GET_CART_ITEMS",
   };
 };
+
+export const storeUserInfo = (data = {}) => {
+  return {
+    type: "STORE_USER",
+    payLoad: data,
+  };
+};

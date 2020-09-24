@@ -9,6 +9,7 @@ import { v4 as uuid } from "uuid";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../actions";
 import Layout from "../../Layout/Layout";
+import { useHistory } from "react-router-dom";
 
 const CLIENT_ID = uuid();
 
@@ -34,6 +35,7 @@ function ProductListing() {
   //const [products, updateProducts] = useState([]);
   const [products, dispatch] = useReducer(reducer, initialState);
   const dispatchToReduxStore = useDispatch();
+  let history = useHistory();
 
   useEffect(() => {
     getProductsData();
@@ -106,7 +108,14 @@ function ProductListing() {
                 >
                   Add To Cart
                 </div>
-                <div className="btn btn-primary marginAllSides">
+                <div
+                  className="btn btn-primary marginAllSides"
+                  onClick={() =>
+                    history.push(
+                      `/productDetails/${product.name}/${product.id}`
+                    )
+                  }
+                >
                   View Details
                 </div>
               </div>

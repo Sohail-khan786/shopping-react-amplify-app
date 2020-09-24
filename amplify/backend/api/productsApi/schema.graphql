@@ -5,6 +5,18 @@ type Product @model {
   description: String!
   price: String!
   quantity: String!
+  reviews: [Review] @connection(name: "ProductReviews") #relationship
+}
+
+type Review
+@model
+@auth(rules: [{ allow: owner, queries: null, ownerField: "createdBy" }]) {
+  id: ID!
+  title: String
+  description: String
+  createdBy: String
+  userName: String
+  product: Product @connection(name: "ProductReviews")
 }
 
 # Mone to many and all realtionships will be done later .... lets focus on crude app for now
