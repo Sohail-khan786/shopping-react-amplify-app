@@ -11,6 +11,11 @@ import { addToCart } from "../../actions";
 import Layout from "../../Layout/Layout";
 import { useHistory } from "react-router-dom";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 const CLIENT_ID = uuid();
 
 const initialState = [];
@@ -104,7 +109,13 @@ function ProductListing() {
                 <p className="card-text">{product.price}</p>
                 <div
                   className="btn btn-success marginAllSides"
-                  onClick={() => dispatchToReduxStore(addToCart(product))}
+                  onClick={() => {
+                    toast.success(`${product.name} added to cart`, {
+                      autoClose: 3000,
+                      hideProgressBar: true,
+                    });
+                    dispatchToReduxStore(addToCart(product));
+                  }}
                 >
                   Add To Cart
                 </div>

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions";
 import Layout from "../../Layout/Layout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 function Cart() {
   const productsInCart = useSelector(
@@ -15,6 +19,11 @@ function Cart() {
   const dispatchToReduxStore = useDispatch();
 
   useEffect(() => {}, [totalCartValue]);
+
+  const checkOut = () => {
+    console.log("checkout clicked");
+    toast.success("checkout clicked");
+  };
 
   return (
     <div>
@@ -38,16 +47,26 @@ function Cart() {
                     <p className="card-text">{`Quantity : ${product.quantity}`}</p>
                     <div
                       className="btn btn-success marginAllSides"
-                      onClick={() => dispatchToReduxStore(addToCart(product))}
+                      onClick={() => {
+                        toast.success(`${product.name} added to cart`, {
+                          autoClose: 3000,
+                          hideProgressBar: true,
+                        });
+                        dispatchToReduxStore(addToCart(product));
+                      }}
                     >
                       Add
                     </div>
 
                     <div
                       className="btn btn-danger marginAllSides"
-                      onClick={() =>
-                        dispatchToReduxStore(removeFromCart(product))
-                      }
+                      onClick={() => {
+                        toast.error(`${product.name} removed from cart`, {
+                          autoClose: 3000,
+                          hideProgressBar: true,
+                        });
+                        dispatchToReduxStore(removeFromCart(product));
+                      }}
                     >
                       Delete
                     </div>
@@ -57,6 +76,11 @@ function Cart() {
             </div>
           </div>
         ))}
+        <div className="col-lg-12 col-md-12 col-sm-12 paddingAllSides text-right">
+          <div className="btn btn-primary marginAllSides" onClick={checkOut}>
+            Checkout
+          </div>
+        </div>
       </div>
     </div>
   );

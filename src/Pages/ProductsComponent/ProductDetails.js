@@ -9,6 +9,11 @@ import {
 } from "../../graphql/mutations";
 import { useSelector } from "react-redux";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 const initialState = {
   title: "",
   description: "",
@@ -75,6 +80,11 @@ function ProductDetails() {
         dummyArray.splice(index, 1, updatedReviewData.data.updateReview);
         setreviews([...dummyArray]);
         clearForm();
+
+        toast.info(`Review Updated`, {
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       } catch (err) {
         console.log("error creating review...", err);
       }
@@ -95,6 +105,11 @@ function ProductDetails() {
         console.log(reviewData);
         setreviews([...reviews, reviewData.data.createReview]);
         clearForm();
+
+        toast.success(`Review Added`, {
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       } catch (err) {
         console.log("error creating review...", err);
       }
