@@ -4,6 +4,8 @@ import { addToCart, removeFromCart } from "../../actions";
 import Layout from "../../Layout/Layout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API, graphqlOperation } from "aws-amplify";
+import { createOrder as CreateOrder } from "../../graphql/mutations";
 
 toast.configure();
 
@@ -18,11 +20,14 @@ function Cart() {
 
   const dispatchToReduxStore = useDispatch();
 
+  const userName = useSelector((state) => state.user.username);
+
   useEffect(() => {}, [totalCartValue]);
 
   const checkOut = () => {
-    console.log("checkout clicked");
-    toast.success("checkout clicked");
+    toast.success("Order Placed");
+
+    // write order placing logic
   };
 
   return (
